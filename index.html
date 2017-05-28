@@ -78,7 +78,7 @@
 			<a-sky src="https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Fsechelt.jpg?1490307995926"></a-sky>
 			<a-entity entity-generator="mixin: ball; num: 10" firebase-broadcast="componentsOnce: mixin; components: position"></a-entity>
 			<a-entity entity-generator="mixin: obstacle; num: 7" firebase-broadcast="componentsOnce: mixin, position"></a-entity>
-			<a-sphere id="player" radius="0.01" dynamic-body="shape: sphere; sphereRadius: 1" camera="near: 0.01;" look-controls wasd-controls position="0 1 0">
+			<a-sphere holdable id="player" radius="0.01" dynamic-body="shape: sphere; sphereRadius: 1; linearDamping: 0.5;" camera="near: 0.01;" look-controls wasd-controls position="0 1 0">
 			<!-- <a-entity dynamic-body camera="near: 0.01" look-controls position="0 1.5 0"> -->
 				<a-entity id="left" leap-hand="hand: left; enablePhysics: true; holdDistance: 1"></a-entity>
 				<a-entity id="right" leap-hand="hand: right; enablePhysics: true; holdDistance: 1"></a-entity>
@@ -88,15 +88,50 @@
 			</a-sphere>
 		</a-scene>
 		<script>
-			// let playerEl = document.querySelector('#player');
-			// let lives = 3;
-			// playerEl.addEventListener('body-loaded', bodyEvent => {
-			// 	bodyEvent.detail.body.addEventListener('collide', () => {
-			// 		let lifeEl = document.querySelector('#life-' + lives);
-			// 		playerEl.removeChild(lifeEl);
-			// 		lives--;
-			// 	});
-			// });
+			let playerEl = document.querySelector('#player');
+			let lives = 3;
+			playerEl.addEventListener('body-loaded', bodyEvent => {
+				bodyEvent.detail.body.addEventListener('collide', () => {
+					if (lives > 0) {
+						let lifeEl = document.querySelector('#life-' + lives);
+						playerEl.removeChild(lifeEl);
+						lives--;
+					}
+				});
+			});
+			let scene = document.querySelector("a-scene");
+			setTimeout(function() {
+				let left = scene.systems.physics.children.sim[0];
+				let right = scene.systems.physics.children.sim[1];
+				let leftSet = false;
+				let rightSet = false;
+				Object.defineProperty(left, 'palmBody', {
+					set: function(body) {
+						if (!leftSet) {
+							body.addEventListener('collide', () => {
+								console.log('left collided');
+								playerEl.setAttribute('static-body', 'shape: sphere; sphereRadius: 1;');
+								playerEl.removeAttribute('dynamic-body');
+								
+							});
+							leftSet = true;
+						}
+						
+					}
+				})
+				Object.defineProperty(right, 'palmBody', {
+					set: function(body) {
+						if (!rightSet) {
+							body.addEventListener('collide', () => {
+								console.log('right collided')
+								playerEl.setAttribute('static-body', 'shape: sphere; sphereRadius: 1;');
+								playerEl.removeAttribute('dynamic-body')
+							})
+							rightSet = true;
+						}
+					}
+				})
+			}, 0);
 		</script>
 	</body>
 </html>
