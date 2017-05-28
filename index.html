@@ -7,7 +7,15 @@
     <script src="https://unpkg.com/aframe-physics-system@1.4.0/dist/aframe-physics-system.min.js"></script>
   </head>
   <body>
-    <a-scene>
+    <!-- https://github.com/ngokevin/kframe/tree/master/components/firebase -->
+    <a-scene firebase="apiKey: AIzaSyCfSH6Ow32uPpMxBAA4PTrgBUiM72hSKqk;
+                       authDomain: chicagohacks2017.firebaseapp.com;
+                       databaseURL: https://chicagohacks2017.firebaseio.com,
+                       storageBucket: chicagohacks2017.appspot.com">
+      <a-assets>
+        <!-- TODO -->
+        <a-mixin id="player-model"></a-mixin>
+      </a-assets>
       <a-box static-body position="-1 2.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
       <a-sphere dynamic-body position="0 6.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
       <a-cylinder position="1 2.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
@@ -18,6 +26,5 @@
         <a-entity leap-hand="hand: right"></a-entity>
       </a-entity>
     </a-scene>
-
   </body>
 </html>
