@@ -136,7 +136,9 @@
 		<script>
 			let playerEl = document.querySelector('#player');
 			let lives = 3;
+			let playerBody;
 			playerEl.addEventListener('body-loaded', bodyEvent => {
+				playerBody = bodyEvent.detail.body;
 				bodyEvent.detail.body.addEventListener('collide', () => {
 					if (lives > 0) {
 						let lifeEl = document.querySelector('#life-' + lives);
@@ -156,9 +158,8 @@
 						if (!leftSet) {
 							body.addEventListener('collide', () => {
 								console.log('left collided');
-								playerEl.setAttribute('static-body', 'shape: sphere; sphereRadius: 1;');
-								playerEl.removeAttribute('dynamic-body');
-								
+								let constraint = new CANNON.LockConstraint(body, playerBody);
+								scene.systems.physics.world.addConstraint(constraint);
 							});
 							leftSet = true;
 						}
@@ -170,8 +171,8 @@
 						if (!rightSet) {
 							body.addEventListener('collide', () => {
 								console.log('right collided')
-								playerEl.setAttribute('static-body', 'shape: sphere; sphereRadius: 1;');
-								playerEl.removeAttribute('dynamic-body')
+								let constraint = new CANNON.LockConstraint(body, playerBody);
+								scene.systems.physics.world.addConstraint(constraint);
 							})
 							rightSet = true;
 						}
