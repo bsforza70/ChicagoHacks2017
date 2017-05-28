@@ -8,6 +8,7 @@
 		<script src="https://unpkg.com/aframe-firebase-component@^4.0.0/dist/aframe-firebase-component.min.js"></script>
 		<script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
 		<script src="https://unpkg.com/aframe-entity-generator-component@^3.0.0/dist/aframe-entity-generator-component.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.3/howler.js"></script>
 
 		<script>
 			// controls unit conversion ratio between what we get back from the Leap and what CANNON.js takes
@@ -41,11 +42,37 @@
 					this.handID 	= null;
 					this.el.body.velocity = new CANNON.Vec3(...speed.map(s => s / leapToCANNONRatio));
 					console.log('thrown: ' + speed);
+          var swoosh = new Howl({
+            src: ["swoosh.mp3"],
+            autoplay: true,
+            loop: false,
+            volume: 1.0
+          }).play();
 				}
 			});
 		</script>
 	</head>
 	<body>
+    <script>
+      var songSelection = (Math.floor(Math.random() * (100 - 1)) + 1);
+      if(songSelection < 6) {
+        var sound = new Howl({
+          src: ["first.mp3", "first.mp3"],
+          autoplay: true,
+          loop: true,
+          volume: 0.7
+        });
+      } else {
+        var sound = new Howl({
+          src: ["second.mp3", "second.mp3"],
+          autoplay: true,
+          loop: true,
+          volume: 1.0
+        });
+      }
+      sound.play();
+
+    </script>
 		<script>
 			const controller = new Leap.Controller({
 				enableGestures: true,
