@@ -180,7 +180,7 @@
 								setTimeout(function() {
 									scene.systems.physics.world.removeConstraint(constraint);
 									playerBody.velocity = new CANNON.Vec3(...speed.map(s => s / leapToCANNONRatio / 10));
-								})
+								}, 1000)
 							});
 							leftSet = true;
 						}
