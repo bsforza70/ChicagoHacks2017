@@ -47,19 +47,43 @@
 	</head>
 	<body>
 		<script>
+			// controller
 			const controller = new Leap.Controller({
 				enableGestures: true,
 				frameEventName: 'animationFrame'
 			});
-
 			let speed = [0, 0, 0];
-
 			controller.on('frame', frame => {
 				if (frame.hands.length != 0) {
 					speed = frame.hands[0].palmVelocity;
 				}
 			});
 			controller.connect();
+
+			// generate map
+			function generateMap(xSize, ySize, zSize, obstacles, dodgeballs) {
+				var result = "";
+
+				function createWall(xSize, ySize, zSize, xPos, yPos, zPos) {
+					var boxEl = document.createElement('a-box');
+					boxEl.setAttribute('material', {color: 'red'});
+					boxEl.setAttribute('position', {x: xPos, y: yPos, z: zPos});
+					boxEl.setAttribute('width', xSize);
+					boxEl.setAttribute('height', ySize);
+					boxEl.setAttribute('depth', zSize);
+					var sceneEl = document.querySelector('a-scene');
+					sceneEl.appendChild(boxEl);
+				}
+
+				createWall(xSize, .5, zSize, 0, ySize / 2, 0);
+				createWall(xSize, .5, zSize, 0, -ySize / 2, 0);
+				createWall(xSize, ySize, .5, 0, 0, zSize / 2);
+				createWall(xSize, ySize, .5, 0, 0, -zSize / 2);
+				createWall(.5, ySize, zSize, xSize / 2, 0, 0);
+				createWall(.5, ySize, zSize, -xSize / 2, 0, 0);
+			}
+
+			generateMap(100, 100, 100, 4, 4);
 		</script>
 
 		<!-- https://github.com/ngokevin/kframe/tree/master/components/firebase -->
