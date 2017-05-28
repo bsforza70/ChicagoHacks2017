@@ -59,6 +59,7 @@
 			});
 			controller.connect();
 
+		
 			// generate map
 			function generateMap(xSize, ySize, zSize, obstacles, dodgeballs) {
 				var result = "";
@@ -82,6 +83,34 @@
 				createWall(xSize, ySize, .5, 0, 0, -zSize / 2);
 				createWall(.5, ySize, zSize, xSize / 2, 0, 0);
 				createWall(.5, ySize, zSize, -xSize / 2, 0, 0);
+
+				for (var i = 0; i < obstacles; i++) {
+					var boxEl = document.createElement('a-box');
+					boxEl.setAttribute('material', {color: 'blue'});
+					boxEl.setAttribute('position', {x: -xSize / 2 + Math.random() * xSize,
+													y: -ySize / 2 + Math.random() * ySize,
+													z: -zSize / 2 + Math.random() * zSize});
+					boxEl.setAttribute('width', 20);
+					boxEl.setAttribute('height', 20);
+					boxEl.setAttribute('depth', 20);
+					boxEl.setAttribute('static-body', 'shape: box');
+					boxEl.setAttribute('holdable');
+					var sceneEl = document.querySelector('a-scene');
+					sceneEl.appendChild(boxEl);
+				}
+
+				for (var i = 0; i < dodgeballs; i++) {
+					var boxEl = document.createElement('a-sphere');
+					boxEl.setAttribute('material', {color: 'blue'});
+					boxEl.setAttribute('position', {x: -xSize / 2 + Math.random() * xSize,
+													y: -ySize / 2 + Math.random() * ySize,
+													z: -zSize / 2 + Math.random() * zSize});
+					boxEl.setAttribute('radius', 4);
+					boxEl.setAttribute('dynamic-body', 'shape: sphere');
+					boxEl.setAttribute('holdable');
+					var sceneEl = document.querySelector('a-scene');
+					sceneEl.appendChild(boxEl);
+				}
 			}
 
 		</script>
