@@ -63,7 +63,7 @@
 		</script>
 
 		<!-- https://github.com/ngokevin/kframe/tree/master/components/firebase -->
-		<a-scene physics="gravity: -0.01" firebase="apiKey: AIzaSyCfSH6Ow32uPpMxBAA4PTrgBUiM72hSKqk;
+		<a-scene physics="gravity: 0" firebase="apiKey: AIzaSyCfSH6Ow32uPpMxBAA4PTrgBUiM72hSKqk;
 												 authDomain: chicagohacks2017.firebaseapp.com;
 												 databaseURL: https://chicagohacks2017.firebaseio.com;
 												 storageBucket: chicagohacks2017.appspot.com">
@@ -73,12 +73,13 @@
 				<a-mixin id="player-model"></a-mixin>
 				<a-mixin id="obstacle" static-body="shape: dodecahedron" random-position="min: -12.5 0 -12.5; max: 12.5 25 12.5" geometry="primitive: dodecahedron; radius: 2.5" firebase-broadcast="componentsOnce: mixin, position"></a-mixin>
 			</a-assets>
-			<a-box width=".5" height=".5" depth=".5" position="0.125 4 -4" color="red" holdable dynamic-body="shape: box"></a-box>
+			<a-box width="10" height="10" depth=".5" color="blue" holdable position="0 0 -8" static-body="shape: box"></a-box>
+			<a-sphere radius=".3" position="0.125 4 -4" color="red" holdable dynamic-body="shape: sphere"></a-sphere>
 			<a-plane static-body position="0 0 -4" rotation="-90 0 0" width="40" height="40" color="#7BC8A4"></a-plane>
 			<a-sky src="https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Fsechelt.jpg?1490307995926"></a-sky>
 			<a-entity entity-generator="mixin: ball; num: 10" firebase-broadcast="componentsOnce: mixin; components: position"></a-entity>
 			<a-entity entity-generator="mixin: obstacle; num: 7" firebase-broadcast="componentsOnce: mixin, position"></a-entity>
-			<a-sphere id="player" radius="0.01" static-body="shape: sphere; sphereRadius: 1" camera="near: 0.01;" look-controls wasd-controls position="0 1 0">
+			<a-sphere id="player" radius="1" static-body="shape: sphere; sphereRadius: 1" camera="near: 0.01;" look-controls wasd-controls position="0 1 0">
 			<!-- <a-entity dynamic-body camera="near: 0.01" look-controls position="0 1.5 0"> -->
 				<a-entity id="left" leap-hand="hand: left; enablePhysics: true; holdDistance: 1"></a-entity>
 				<a-entity id="right" leap-hand="hand: right; enablePhysics: true; holdDistance: 1"></a-entity>
