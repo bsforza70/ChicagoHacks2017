@@ -124,7 +124,7 @@
 			<a-entity entity-generator="mixin: ball; num: 10" firebase-broadcast="componentsOnce: mixin; components: position"></a-entity>
 			<a-entity entity-generator="mixin: obstacle; num: 7" firebase-broadcast="componentsOnce: mixin, position"></a-entity>
 			<!-- <a-sky src="https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Fsechelt.jpg?1490307995926"></a-sky> -->
-			<a-sphere id="player" radius="0.01" dynamic-body="shape: sphere; sphereRadius: 1" camera="near: 0.01;" look-controls position="0 1 0">
+			<a-sphere holdable id="player" radius="0.01" dynamic-body="shape: sphere; sphereRadius: 1" camera="near: 0.01;" look-controls position="0 1 0">
 			<!-- <a-entity dynamic-body camera="near: 0.01" look-controls position="0 1.5 0"> -->
 				<a-entity id="left" leap-hand="hand: left; enablePhysics: true; holdDistance: 1"></a-entity>
 				<a-entity id="right" leap-hand="hand: right; enablePhysics: true; holdDistance: 1"></a-entity>
@@ -157,9 +157,13 @@
 					set: function(body) {
 						if (!leftSet) {
 							body.addEventListener('collide', () => {
-								console.log('left collided');
+								console.log('left collided', body);
 								let constraint = new CANNON.LockConstraint(body, playerBody);
 								scene.systems.physics.world.addConstraint(constraint);
+								setTimeout(function() {
+									scene.systems.physics.world.removeConstraint(constraint);
+									playerBody.velocity = new CANNON.Vec3(...speed.map(s => s / leapToCANNONRatio / 10));
+								})
 							});
 							leftSet = true;
 						}
