@@ -71,9 +71,8 @@
 				<!-- <a-mixin id="ball" holdable dynamic-body="shape: sphere; sphereRadius: 0.1" random-position="min: -12.5 0 -12.5; max: 12.5 25 12.5" geometry="primitive: sphere; radius: 0.1" firebase-broadcast="componentsOnce: mixin; components: position"></a-mixin> -->
 				<a-mixin id="ball" holdable dynamic-body="shape: sphere; sphereRadius: 0.1" random-position="min: -12.5 0 -12.5; max: 12.5 25 12.5" geometry="primitive: sphere; radius: 0.1"></a-mixin>
 				<a-mixin id="player-model"></a-mixin>
-				<!--<a-mixin id="obstacle" static-body="shape: dodecahedron" random-position="min: -12.5 0 -12.5; max: 12.5 25 12.5" random-rotation="min: 0 0 0; max:360 360 360" collada-model="#rock" firebase-broadcast="componentsOnce: mixin, position"></a-mixin>-->
-				<a-mixin id="obstacle" static-body="shape: dodecahedron" random-position="min: -12.5 0 -12.5; max: 12.5 25 12.5" random-rotation="min: 0 0 0; max:360 360 360" collada-model="#rock"></a-mixin>
-				<a-asset-item id="rock" src="./rock.dae"></a-asset-item>
+				<!--<a-mixin iid="obstacle" static-body="shape: dodecahedron" random-position="min: -12.5 0 -12.5; max: 12.5 25 12.5" random-rotation="min: 0 0 0; max: 360 360 360" geometry="primitive: dodecahedron; radius: 2.5" firebase-broadcast="componentsOnce: mixin, position"></a-mixin>-->
+				<a-mixin id="obstacle" static-body="shape: dodecahedron" random-position="min: -12.5 0 -12.5; max: 12.5 25 12.5" random-rotation="min: 0 0 0; max: 360 360 360" geometry="primitive: dodecahedron; radius: 2.5"></a-mixin>
 			</a-assets>
 			<a-box width="10" height="10" depth=".5" color="blue" holdable position="0 0 -8" static-body="shape: box"></a-box>
 			<a-sphere radius=".3" position="0.125 4 -4" color="red" holdable dynamic-body="shape: sphere"></a-sphere>
