@@ -40,6 +40,17 @@
 					console.log('thrown: ' + speed);
 				}
 			});
+
+			AFRAME.registerComponent('motor', {
+				tick() {
+					[roll, pitch, yaw] = Object.values(this.el.getAttribute('rotation')).map(a => a * (Math.PI / 180));
+					console.log(this.el.body.velocity = new CANNON.Vec3(
+						-Math.cos(yaw) * Math.sin(pitch) * Math.sin(roll) - Math.sin(yaw) * Math.cos(roll),
+						-Math.sin(yaw) * Math.sin(pitch) * Math.sin(roll) + Math.cos(yaw) * Math.cos(roll),
+						Math.cos(pitch) * Math.sin(roll)
+					).scale(10));
+				}
+			});
 		</script>
 	</head>
 	<body>
@@ -141,7 +152,7 @@
 			<a-entity entity-generator="mixin: ball; num: 10" firebase-broadcast="componentsOnce: mixin; components: position"></a-entity>
 			<a-entity entity-generator="mixin: obstacle; num: 7" firebase-broadcast="componentsOnce: mixin, position"></a-entity>
 			<!-- <a-sky src="https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Fsechelt.jpg?1490307995926"></a-sky> -->
-			<a-sphere holdable id="player" radius="0.01" dynamic-body="shape: sphere; sphereRadius: 1" camera="near: 0.01;" look-controls position="0 1 0">
+			<a-sphere holdable motor id="player" radius="0.01" dynamic-body="shape: sphere; sphereRadius: 1" camera="near: 0.01;" look-controls position="0 1 0">
 			<!-- <a-entity dynamic-body camera="near: 0.01" look-controls position="0 1.5 0"> -->
 				<a-entity id="left" leap-hand="hand: left; enablePhysics: true; holdDistance: 1"></a-entity>
 				<a-entity id="right" leap-hand="hand: right; enablePhysics: true; holdDistance: 1"></a-entity>
@@ -184,7 +195,7 @@
 							});
 							leftSet = true;
 						}
-						
+
 					}
 				})
 				Object.defineProperty(right, 'palmBody', {
