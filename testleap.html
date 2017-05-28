@@ -1,0 +1,44 @@
+ <head>
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="https://js.leapmotion.com/leap-0.6.4.min.js"></script>
+    <script src="https://unpkg.com/aframe-leap-hands/dist/aframe-leap-hands.min.js"></script>
+    <script src="https://unpkg.com/aframe-physics-system@1.4.0/dist/aframe-physics-system.min.js"></script>
+    <script src="https://unpkg.com/aframe-firebase-component@^4.0.0/dist/aframe-firebase-component.min.js"></script>
+  </head>
+  <body>
+
+<p>Framerate: <span id="leapFPS">FPS</span></p>
+<p>Number of hands: <span id="handCount">Hands</span></p>
+<p>Number of pointables: <span id="pointableCount">Pointables</span></p>
+<p>Number of tools: <span id="toolCount">Tools</span></p>
+<p>Number of fingers: <span id="fingerCount">Fingers</span></p>
+<p>Number of gestures: <span id="gestureCount">Gestures</span></p>
+<p>speed: <span id="speed">Speed</span></p>
+
+<script>
+var controller = new Leap.Controller({
+                         enableGestures: true,
+                         frameEventName: 'animationFrame'
+                         });
+
+var fpsDisplay = document.getElementById('leapFPS');
+var handCountDisplay = document.getElementById('handCount');
+var pointableCountDisplay = document.getElementById('pointableCount');
+var fingerCountDisplay = document.getElementById('fingerCount');
+var toolCountDisplay = document.getElementById('toolCount');
+var gestureCountDisplay = document.getElementById('gestureCount');
+var speedDisplay = document.getElementById('speed');
+
+controller.on('frame', function(frame){
+  fpsDisplay.innerText = frame.currentFrameRate;
+  handCountDisplay.innerText = frame.hands.length;
+  pointableCountDisplay.innerText = frame.pointables.length;
+  fingerCountDisplay.innerText = frame.fingers.length;
+  toolCountDisplay.innerText = frame.tools.length;
+  gestureCountDisplay.innerText = frame.gestures.length;
+
+  speedDisplay.innerText = frame.hands[0].palmVelocity;
+  });
+controller.connect();
+</script>
+</body>
