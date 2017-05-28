@@ -6,15 +6,18 @@
     <script src="https://unpkg.com/aframe-leap-hands/dist/aframe-leap-hands.min.js"></script>
     <script src="https://unpkg.com/aframe-physics-system@1.4.0/dist/aframe-physics-system.min.js"></script>
     <script src="https://unpkg.com/aframe-firebase-component@^4.0.0/dist/aframe-firebase-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
+    <script src="https://unpkg.com/aframe-entity-generator-component@^3.0.0/dist/aframe-entity-generator-component.min.js"></script>
   </head>
   <body>
     <!-- https://github.com/ngokevin/kframe/tree/master/components/firebase -->
     <a-scene firebase="apiKey: AIzaSyCfSH6Ow32uPpMxBAA4PTrgBUiM72hSKqk;
                        authDomain: chicagohacks2017.firebaseapp.com;
-                       databaseURL: https://chicagohacks2017.firebaseio.com,
+                       databaseURL: https://chicagohacks2017.firebaseio.com;
                        storageBucket: chicagohacks2017.appspot.com">
       <a-assets>
         <!-- TODO -->
+        <a-mixin id="ball" random-position="min: -12.5 0 -12.5; max: 12.5 25 12.5" geometry="primitive: sphere; radius: 0.1"></a-mixin>
         <a-mixin id="player-model"></a-mixin>
       </a-assets>
       <a-box static-body position="-1 2.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
@@ -22,6 +25,7 @@
       <a-cylinder position="1 2.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
       <a-plane static-body position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
       <a-sky src="https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Fsechelt.jpg?1490307995926"></a-sky>
+      <a-entity entity-generator="mixin: ball; num: 10"></a-entity>
       <a-entity camera="near: 0.01" look-controls wasd-controls position="0 1.5 0">
         <a-entity leap-hand="hand: left"></a-entity>
         <a-entity leap-hand="hand: right"></a-entity>
